@@ -5,9 +5,14 @@ import Axios from 'axios';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      data: []
+    };
   }
   componentDidMount() {
-    axios.get('/api/test').then(res => console.log(res));
+    axios
+      .get('/api/test')
+      .then(res => console.log(res.data['Time Series (1min)']));
   }
   render() {
     return (
