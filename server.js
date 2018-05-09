@@ -14,7 +14,7 @@ app.get('/api/*', (req, res) => {
   let data = 'hit';
   axios
     .get(
-      `https://www.alphavantage.co/query?function=TIME_SERIES_INTRADAY&symbol=tsla&interval=1min&apikey=${
+      `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=MSFT&apikey=${
         keys.apiKEY
       }`
     )
