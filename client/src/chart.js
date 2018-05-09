@@ -8,3 +8,8 @@ export default class Chart extends Component {
     return <div />;
   }
 }
+<VictoryVoronoiContainer
+width={800}
+height={800}
+labels={d => d.y}
+/>
