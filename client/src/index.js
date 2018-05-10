@@ -12,6 +12,7 @@ class App extends Component {
     super(props);
     this.state = {
       data: [],
+      dataArr: [],
       term: ''
     };
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,12 +20,14 @@ class App extends Component {
   }
   componentDidMount() {
     axios.get('/api/pull').then(res => {
-      this.setState({
-        data: {
-          name: res.data['Meta Data'],
-          data: res.data['Time Series (Daily)']
-        }
+      let arr = [];
+      res.data.forEach(e => {
+        arr.push({
+          name: e['Meta Data'],
+          data: e['Time Series (Daily)']
+        });
       });
+      this.setState({ data: arr });
     });
   }
   onInputChange(e) {
@@ -39,16 +42,28 @@ class App extends Component {
       console.log(res);
     });
   }
+
   render() {
     let dataArr = [];
-    const data = this.state.data.data;
-    for (const prop1 in data) {
-      dataArr.push({ date: [prop1], usd: data[prop1]['2. high'] });
-    }
-    dataArr = dataArr.map(x => {
-      return { x: new Date(x.date[0]), y: parseInt(x.usd, 10) };
+    const data = this.state.data;
+    data.forEach(x => {
+      console.log(x);
+      for (const prop1 in x.data) {
+        dataArr.push({
+          name: x.name['2. Symbol'],
+          date: [prop1],
+          usd: x.data[prop1]['2. high']
+        });
+      }
     });
-    // dataArr.push({ x: new Date('2018-05-09'), y: 216 });
+    dataArr = dataArr.map(x => {
+      return { name: x.name, x: new Date(x.date[0]), y: parseInt(x.usd, 10) };
+    });
+    const dataArr1 = dataArr.slice(0, 100);
+    const dataArr2 = dataArr.slice(100, 200);
+    const dataArr3 = dataArr.slice(200, 300);
+    const dataArr4 = dataArr.slice(300, 400);
+
     return (
       <div>
         <div className="container">
@@ -60,7 +75,10 @@ class App extends Component {
               <VictoryZoomVoronoiContainer labels={d => `$${d.y}`} />
             }
           >
-            <VictoryLine data={dataArr} />
+            {dataArr1.length > 0 ? <VictoryLine data={dataArr1} /> : [null]}
+            {dataArr2.length > 0 ? <VictoryLine data={dataArr2} /> : [null]}
+            {dataArr3.length > 0 ? <VictoryLine data={dataArr3} /> : [null]}
+            {dataArr4.length > 0 ? <VictoryLine data={dataArr4} /> : [null]}
           </VictoryChart>
         </div>
         <Searchbar
