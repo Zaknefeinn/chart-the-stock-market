@@ -31,7 +31,7 @@ app.get('/api/pull', (req, res) => {
       .all(data)
       .then(results => results.map(x => x.data))
       .then(allData => res.send(allData));
-  });
+  }).catch(err => console.log(err));
 });
 
 app.post('/api/search', (req, res) => {
