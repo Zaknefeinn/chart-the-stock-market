@@ -60,12 +60,6 @@ button:focus {
 .sub {
   flex: 2;
 }
-.sub-left {
-  background-color: blue;
-}
-.sub-right {
-  background-color: red;
-}
 .sub h1 {
   text-decoration: underline;
 }
