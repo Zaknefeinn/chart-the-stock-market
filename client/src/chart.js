@@ -8,6 +8,7 @@ export default class componentName extends Component {
     return (
       <div className="chart-container">
         <LineChart
+          height={600}
           colors={['#FF0000', '#FFFA6A', '#2AFF00', '#00B9FF']}
           data={this.props.data}
           prefix="$"

@@ -67,7 +67,7 @@ button:focus {
   display: flex;
 }
 .sub {
-  flex: 2;
+  flex: 3;
 }
 .sub h1 {
   text-decoration: underline;

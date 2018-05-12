@@ -1,30 +1,12 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
-// import {
-//   VictoryChart,
-//   VictoryLine,
-//   createContainer,
-//   VictoryTheme,
-//   VictoryAxis
-// } from 'victory';
 import Chart from './chart';
 import Searchbar from './searchbar';
 import Card from './card';
 import './main.css';
 import socketIOClient from 'socket.io-client';
 
-// const VictoryZoomVoronoiContainer = createContainer('zoom', 'voronoi');
-// function updateData() {
-//   const socket = socketIOClient('http://localhost:5000');
-//   socket.on('add symbol', sym => {
-//     const newSym = {
-//       name: sym['Meta Data'],
-//       data: sym['Time Series (Daily)']
-//     };
-//     // this.setState({ data: [...this.state.data, newSym] });
-//   });
-// }
 class App extends Component {
   constructor(props) {
     super(props);
@@ -34,14 +16,13 @@ class App extends Component {
       dataArr: [],
       term: '',
       cards: [],
-      endpoint: 'http://localhost:5000'
+      endpoint: 'https://thawing-plateau-12593.herokuapp.com/'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
   }
   componentDidMount() {
     axios.get('/api/pull').then(res => {
-      console.log(res);
       let arr = [];
       let names = [];
       res.data.forEach(e => {
@@ -119,7 +100,7 @@ class App extends Component {
       const socket = socketIOClient(this.state.endpoint);
       socket.emit('add symbol', this.state.term);
     } else {
-      console.log('too many datapoints');
+      alert('You may only show 4 at a time!');
     }
     this.setState({ term: '' });
   }
@@ -127,7 +108,6 @@ class App extends Component {
   render() {
     const cardData = this.state.cards;
     const data = this.state.data;
-    const socket = socketIOClient(this.state.endpoint);
     //Load Cards
     const cards = cardData.map(x => {
       return (
@@ -142,9 +122,8 @@ class App extends Component {
 
     //Check Chart Data
     let dataArr = [];
-
     data.forEach(x => {
-      let newObj = new Object();
+      let newObj = {};
       for (const prop1 in x.data) {
         newObj[prop1] = parseFloat(x.data[prop1]['4. close'], 10).toFixed(2);
       }

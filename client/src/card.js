@@ -18,6 +18,10 @@ export default class Card extends Component {
             <h1>Open</h1>
             <h2>${parseInt(this.props.stats['1. open'], 10)}</h2>
           </div>
+          <div className="sub sub-middle">
+            <h1>Volume</h1>
+            <h2>{parseInt(this.props.stats['5. volume'], 10)}</h2>
+          </div>
           <div className="sub sub-right">
             <h1>Close</h1>
             <h2>${parseInt(this.props.stats['4. close'], 10)}</h2>
