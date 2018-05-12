@@ -10,6 +10,7 @@ export default class Searchbar extends Component {
               type="text"
               className="form-control"
               placeholder="Stock Symbol"
+              value={this.props.term}
               onChange={this.props.onInputChange}
             />
             <div className="input-group-append">

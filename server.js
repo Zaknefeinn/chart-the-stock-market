@@ -31,7 +31,6 @@ io.on('connection', socket => {
         }`
       )
       .then(e => {
-        console.log(e.data['Error Message']);
         if (e.data['Error Message'] === undefined) {
           Stock.find({}, (err, term) => {
             if (err) throw err;
@@ -102,8 +101,9 @@ app.get('/api/pull', (req, res) => {
     axios
       .all(data)
       .then(results => results.map(x => x.data))
-      .then(allData => res.send(allData));
-  }).catch(err => console.log(err));
+      .then(allData => res.send(allData))
+      .catch(err => console.log(err));
+  });
 });
 
 // app.post('/api/search', (req, res) => {
