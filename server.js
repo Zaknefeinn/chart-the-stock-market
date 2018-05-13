@@ -105,51 +105,15 @@ app.get('/api/pull', (req, res) => {
       .catch(err => console.log(err));
   });
 });
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static('client/build'));
 
-// app.post('/api/search', (req, res) => {
-//   const searchRequest = req.body.term.toUpperCase();
-//   // let arr = [];
-//   Stock.find({}, (err, term) => {
-//     if (err) throw err;
-//     //if there is a database
-//     let termArr = term[0].stocks;
-//     if (term.length > 0) {
-//       //check if stock isn't already in database
-//       if (termArr.indexOf(searchRequest) < 0) {
-//         termArr.push(searchRequest);
-//         Stock.findByIdAndUpdate(
-//           term[0]._id,
-//           { $set: { stocks: termArr } },
-//           (err, update) => {
-//             if (err) throw err;
-//           }
-//         );
-//       }
-//     } else {
-//       //if there is not a database
-//       Stock.create({ stocks: searchRequest }, (err, created) => {
-//         if (err) throw err;
-//       });
-//     }
-//   });
-//   res.end();
-// });
+  const path = require('path');
 
-// app.put('/api/:id', (req, res) => {
-//   const stock = req.params.id;
-//   Stock.find({}, (err, stocks) => {
-//     if (err) throw err;
-//     // console.log(stock[0].stocks);
-//     const newArr = stocks[0].stocks.filter(x => x !== stock);
-//     Stock.findByIdAndUpdate(
-//       stocks[0]._id,
-//       { $set: { stocks: newArr } },
-//       (err, update) => {
-//         if (err) throw err;
-//       }
-//     );
-//   });
-// });
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 server.listen(PORT, () => {
