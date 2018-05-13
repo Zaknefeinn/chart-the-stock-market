@@ -22,31 +22,33 @@ class App extends Component {
     this.onInputChange = this.onInputChange.bind(this);
   }
   componentDidMount() {
-    axios.get('/api/pull').then(res => {
-      let arr = [];
-      let names = [];
-      res.data.forEach(e => {
-        let dailyStats;
-        for (var prop in e['Time Series (Daily)']) {
-          dailyStats = e['Time Series (Daily)'][prop];
-          break;
-        }
-        names.push({
-          symbol: e['Meta Data']['2. Symbol'],
-          currentStats: dailyStats
+    axios
+      .get('https://thawing-plateau-12593.herokuapp.com/api/pull')
+      .then(res => {
+        let arr = [];
+        let names = [];
+        res.data.forEach(e => {
+          let dailyStats;
+          for (var prop in e['Time Series (Daily)']) {
+            dailyStats = e['Time Series (Daily)'][prop];
+            break;
+          }
+          names.push({
+            symbol: e['Meta Data']['2. Symbol'],
+            currentStats: dailyStats
+          });
+          arr.push({
+            name: e['Meta Data'],
+            data: e['Time Series (Daily)']
+          });
         });
-        arr.push({
-          name: e['Meta Data'],
-          data: e['Time Series (Daily)']
+        this.setState({
+          data: arr
+        });
+        this.setState({
+          cards: names
         });
       });
-      this.setState({
-        data: arr
-      });
-      this.setState({
-        cards: names
-      });
-    });
     //Live Add Card
     const socket = socketIOClient(this.state.endpoint);
     socket.on('add symbol', sym => {
