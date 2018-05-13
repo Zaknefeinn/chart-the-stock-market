@@ -1,11 +1,4 @@
 {
-  "name": "chart the stock market",
-  "version": "0.0.0",
-  "description":
-    "A chat example to showcase how to use `socket.io` with a static `express` server with `async` for control flow.",
-  "main": "server.js",
-  "repository": "",
-  "author": "Zaknefeinn",
   "scripts": {
     "start": "nodemon server.js",
     "dev": "concurrently \"npm run server\" \"npm run client\" ",
@@ -14,6 +7,8 @@
     "heroku-postbuild":
       "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
+  "name": "eric",
+  "version": "",
   "dependencies": {
     "async": "^2.6.0",
     "axios": "^0.18.0",
