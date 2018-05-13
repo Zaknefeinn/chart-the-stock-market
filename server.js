@@ -91,11 +91,13 @@ app.get('/api/pull', (req, res) => {
     stocksArr = stocks[0].stocks;
     stocksArr.map(x => {
       data.push(
-        axios.get(
-          `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${x}&apikey=${
-            keys.apiKEY
-          }`
-        )
+        axios
+          .get(
+            `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${x}&apikey=${
+              keys.apiKEY
+            }`
+          )
+          .catch(err => console.log('error'))
       );
     });
     axios
