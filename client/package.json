@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
+    "babel-cli": "^6.26.0",
     "highcharts": "^6.1.0",
     "react": "^16.3.2",
     "react-chartkick": "^0.2.0",
