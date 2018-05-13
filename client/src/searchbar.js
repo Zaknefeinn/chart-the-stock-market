@@ -15,7 +15,7 @@ export default class Searchbar extends Component {
             />
             <div className="input-group-append">
               <button className="btn" type="submit">
-                Button
+                Add
               </button>
             </div>
           </div>
