@@ -74,7 +74,10 @@ button:focus {
 }
 
 @media (max-width: 980px) {
-  .card-container {
+  /* .card-container {
     display: none;
+  } */
+  .card {
+    flex: 0 100%;
   }
 }
