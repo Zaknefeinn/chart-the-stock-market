@@ -105,6 +105,7 @@ app.get('/api/pull', (req, res) => {
       .catch(err => console.log(err));
   });
 });
+console.log(process.env.NODE_ENV);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
