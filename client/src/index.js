@@ -16,7 +16,7 @@ class App extends Component {
       dataArr: [],
       term: '',
       cards: [],
-      endpoint: 'https://thawing-plateau-12593.herokuapp.com/'
+      endpoint: 'https://thawing-plateau-12593.herokuapp.com'
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);

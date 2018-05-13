@@ -19,7 +19,7 @@
   },
   "proxy": {
     "/api/*": {
-      "target": "https://thawing-plateau-12593.herokuapp.com/"
+      "target": "https://thawing-plateau-12593.herokuapp.com"
     }
   },
   "description": "Nothing",
