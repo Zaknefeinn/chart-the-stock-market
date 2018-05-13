@@ -14,74 +14,74 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-const server = http.createServer(app);
+// const server = http.createServer(app);
 
-const io = socketIO(server);
+// const io = socketIO(server);
 
-io.on('connection', socket => {
-  console.log('New client connected');
-  //Add Symbol
-  socket.on('add symbol', symbol => {
-    const searchRequest = symbol.toUpperCase();
+// io.on('connection', socket => {
+//   console.log('New client connected');
+//   //Add Symbol
+//   socket.on('add symbol', symbol => {
+//     const searchRequest = symbol.toUpperCase();
 
-    axios
-      .get(
-        `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${searchRequest}&apikey=${
-          keys.apiKEY
-        }`
-      )
-      .then(e => {
-        if (e.data['Error Message'] === undefined) {
-          Stock.find({}, (err, term) => {
-            if (err) throw err;
-            //if there is a database
-            let termArr = term[0].stocks;
-            if (term.length > 0) {
-              //check if stock isn't already in database
-              if (termArr.indexOf(searchRequest) < 0) {
-                termArr.push(searchRequest);
-                Stock.findByIdAndUpdate(
-                  term[0]._id,
-                  { $set: { stocks: termArr } },
-                  (err, update) => {
-                    if (err) throw err;
-                  }
-                );
-                io.sockets.emit('add symbol', e.data);
-              }
-            } else {
-              //if there is not a database
-              Stock.create({ stocks: searchRequest }, (err, created) => {
-                if (err) throw err;
-              });
-              io.sockets.emit('add symbol', e.data);
-            }
-          });
-        } else {
-          //handle "this stock does not exist"
-        }
-      });
-  });
+//     axios
+//       .get(
+//         `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${searchRequest}&apikey=${
+//           keys.apiKEY
+//         }`
+//       )
+//       .then(e => {
+//         if (e.data['Error Message'] === undefined) {
+//           Stock.find({}, (err, term) => {
+//             if (err) throw err;
+//             //if there is a database
+//             let termArr = term[0].stocks;
+//             if (term.length > 0) {
+//               //check if stock isn't already in database
+//               if (termArr.indexOf(searchRequest) < 0) {
+//                 termArr.push(searchRequest);
+//                 Stock.findByIdAndUpdate(
+//                   term[0]._id,
+//                   { $set: { stocks: termArr } },
+//                   (err, update) => {
+//                     if (err) throw err;
+//                   }
+//                 );
+//                 io.sockets.emit('add symbol', e.data);
+//               }
+//             } else {
+//               //if there is not a database
+//               Stock.create({ stocks: searchRequest }, (err, created) => {
+//                 if (err) throw err;
+//               });
+//               io.sockets.emit('add symbol', e.data);
+//             }
+//           });
+//         } else {
+//           //handle "this stock does not exist"
+//         }
+//       });
+//   });
 
-  //Remove Symbol
-  socket.on('remove symbol', symbol => {
-    Stock.find({}, (err, stocks) => {
-      if (err) throw err;
-      const newArr = stocks[0].stocks.filter(x => x !== symbol);
-      Stock.findByIdAndUpdate(
-        stocks[0]._id,
-        { $set: { stocks: newArr } },
-        (err, update) => {
-          if (err) throw err;
-        }
-      );
-      io.sockets.emit('remove symbol', newArr);
-    });
-  });
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
-});
+//   //Remove Symbol
+//   socket.on('remove symbol', symbol => {
+//     Stock.find({}, (err, stocks) => {
+//       if (err) throw err;
+//       const newArr = stocks[0].stocks.filter(x => x !== symbol);
+//       Stock.findByIdAndUpdate(
+//         stocks[0]._id,
+//         { $set: { stocks: newArr } },
+//         (err, update) => {
+//           if (err) throw err;
+//         }
+//       );
+//       io.sockets.emit('remove symbol', newArr);
+//     });
+//   });
+//   socket.on('disconnect', () => {
+//     console.log('user disconnected');
+//   });
+// });
 
 app.get('/api/pull', (req, res) => {
   const data = [];
@@ -111,10 +111,9 @@ if (process.env.NODE_ENV === 'production') {
 
   const path = require('path');
 
-  // app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  console.log(path.resolve(__dirname, 'client', 'build', 'index.html'));
-  // });
+  app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
+  });
 }
 
 const PORT = process.env.PORT || 5000;
