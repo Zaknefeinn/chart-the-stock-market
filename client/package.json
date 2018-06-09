@@ -18,8 +18,7 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-
-  "description": "Nothing",
+  "description": "Chart the Stock Market",
   "main": "server.js",
   "devDependencies": {},
   "repository": {
@@ -30,5 +29,6 @@
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Zaknefeinn/chart-the-stock-market/issues"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }

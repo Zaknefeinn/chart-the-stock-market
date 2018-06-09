@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ReactChartKick, { LineChart } from 'react-chartkick';
-import Chart from 'highcharts';
+import ChartType from 'highcharts';
 
-ReactChartKick.addAdapter(Chart);
-export default class componentName extends Component {
+ReactChartKick.addAdapter(ChartType);
+export default class Chart extends Component {
   render() {
     return (
       <div className="chart-container">

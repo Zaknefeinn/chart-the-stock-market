@@ -1,6 +1,9 @@
 html {
   height: 100%;
 }
+#root {
+  height: 100%;
+}
 body {
   background-color: black;
   background-image: url('https://www.strath.ac.uk/media/1newwebsite/departmentsubject/economics/stock-market.gif');
@@ -8,6 +11,7 @@ body {
   background-position: center;
   background-size: cover;
   width: 100%;
+  height: 100%;
   color: white;
 }
 
@@ -30,9 +34,9 @@ body {
 }
 .card-container {
   display: flex;
-  height: 400px;
+  height: 200px;
   width: 90%;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   margin: 0 auto;
   /* align-items: center; */
 }
@@ -73,10 +77,12 @@ button:focus {
   text-decoration: underline;
 }
 
-@media (max-width: 980px) {
-  /* .card-container {
-    display: none;
-  } */
+@media (max-width: 1600px) {
+  .card-container {
+    flex-wrap: wrap;
+  }
+}
+@media (max-width: 900px) {
   .card {
     flex: 0 100%;
   }
