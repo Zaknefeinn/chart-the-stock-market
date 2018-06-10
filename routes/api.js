@@ -1,9 +1,10 @@
 const express = require('express'),
   router = express.Router(),
   axios = require('axios'),
+  keys = require('../config/keys'),
   Stock = require('../models/stock.js');
 
-router.get('/api/pull', (req, res) => {
+router.get('/', (req, res) => {
   const data = [];
   let stocksArr;
   Stock.find({}, (err, stocks) => {
