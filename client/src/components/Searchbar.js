@@ -12,8 +12,8 @@ export default class Searchbar extends Component {
   };
   handleSubmit = e => {
     e.preventDefault();
-    this.props.handleSubmit(this.state.term);
     this.setState({ term: '' });
+    this.props.handleSubmit(this.state.term);
   };
   render() {
     return (
@@ -24,7 +24,7 @@ export default class Searchbar extends Component {
               type="text"
               className="form-control"
               placeholder="Stock Symbol"
-              value={this.props.term}
+              value={this.state.term}
               onChange={this.onInputChange}
             />
             <div className="input-group-append">
