@@ -35,6 +35,7 @@ class App extends Component {
       });
       this.setState({ dataSet });
     });
+
     // Live Add Card
     socket.on('add symbol', sym => {
       this.setState({
@@ -63,7 +64,6 @@ class App extends Component {
     } else {
       alert('You may only show 4 at a time!');
     }
-    // this.forceUpdate();
   };
 
   render() {
@@ -86,6 +86,7 @@ class App extends Component {
     let dataArr = [];
     dataSet.forEach(stock => {
       let newObj = {};
+      //Create an object of data points structured as { date: closing price }
       for (const prop in stock.dataPoints) {
         newObj[prop] = parseFloat(stock.dataPoints[prop].close, 10).toFixed(2);
       }

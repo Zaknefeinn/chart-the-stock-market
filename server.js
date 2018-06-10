@@ -4,10 +4,11 @@ const express = require('express'),
   mongoose = require('mongoose'),
   keys = require('./config/keys'),
   axios = require('axios'),
-  async = require('async'),
   Stock = require('./models/stock.js'),
   http = require('http'),
   socketIO = require('socket.io');
+
+const Api = require('./routes/api');
 
 mongoose.connect(keys.mongoURL).then(() => console.log('connected'));
 mongoose.Promise = global.Promise;
@@ -83,30 +84,31 @@ io.on('connection', socket => {
   });
 });
 
-app.get('/api/pull', (req, res) => {
-  const data = [];
-  let stocksArr;
-  Stock.find({}, (err, stocks) => {
-    if (err) throw err;
-    stocksArr = stocks[0].stocks;
-    stocksArr.map(x => {
-      data.push(
-        axios
-          .get(
-            `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${x}&apikey=${
-              keys.apiKEY
-            }`
-          )
-          .catch(err => console.log('error'))
-      );
-    });
-    axios
-      .all(data)
-      .then(results => results.map(x => x.data))
-      .then(allData => res.send(allData))
-      .catch(err => console.log(err));
-  });
-});
+// app.get('/api/pull', (req, res) => {
+//   const data = [];
+//   let stocksArr;
+//   Stock.find({}, (err, stocks) => {
+//     if (err) throw err;
+//     stocksArr = stocks[0].stocks;
+//     stocksArr.map(x => {
+//       data.push(
+//         axios
+//           .get(
+//             `https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=${x}&apikey=${
+//               keys.apiKEY
+//             }`
+//           )
+//           .catch(err => console.log('error'))
+//       );
+//     });
+//     axios
+//       .all(data)
+//       .then(results => results.map(x => x.data))
+//       .then(allData => res.send(allData))
+//       .catch(err => console.log(err));
+//   });
+// });
+app.use('/api/pull', Api);
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static('client/build'));
 
